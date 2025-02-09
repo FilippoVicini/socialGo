@@ -40,4 +40,3 @@ In Go we will have dependencies on interfaces and not structs. Structs can imple
 
 
 
-# socialGo
