@@ -1,6 +1,10 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"github.com/filippovicini/socialgo/internal/env"
+)
 
 // entrypoint for the cmd/api folder
 // setting up dependencies
@@ -10,7 +14,7 @@ func main() {
   // creating a struct out of the application interface
   app :=  &application{
     config{
-      addr: ":8080", // HARD CODED server port
+      addr: env.GetString("ADDR", ":8080"), // HARD CODED server port
     },
   }
 

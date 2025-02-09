@@ -26,7 +26,15 @@ func(app *application) mount() http.Handler{
 
   r := chi.NewRouter()
   // Logs starts and ends of each request
+  // chi strcture for good REST API
+  r.Use(middleware.RequestID)
+  r.Use(middleware.RealIP)
+  r.Use(middleware.Recoverer)
   r.Use(middleware.Logger)
+
+
+  //timeout chi
+  r.Use(middleware.Timeout(60*time.Second))
 
   // Group routes by version
   r.Route("/v1",  func(r chi.Router){
