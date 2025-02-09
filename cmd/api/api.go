@@ -4,6 +4,9 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 // application interface
@@ -17,27 +20,35 @@ type config struct {
 }
 
 
+// returns chi.Router
+// mount sets up the router and defines API routes
+func(app *application) mount() http.Handler{
 
-func(app *application) mount() *http.ServeMux{
+  r := chi.NewRouter()
+  // Logs starts and ends of each request
+  r.Use(middleware.Logger)
 
-mux := http.NewServeMux()
+  // Group routes by version
+  r.Route("v1",  func(r chi.Router){
 
-// check health of system with a handler defined in health.go
-mux.HandleFunc("GET /v1/health", app.healthCheckHandler)
+  r.Get("/health", app.healthCheckHandler)
+  })
 
-return mux;
+return r;
 } 
 
 
 
 // parameter pointer to application
 // the run takes mux as param to create a new handler
-func(app *application) run(mux *http.ServeMux) error {
+// run starts the HTTP server with the specified configuration
+func(app *application) run(mux http.Handler) error {
 
   // create handler for routes
 
 
   // create a server connection
+  // create server instance
   srv := &http.Server{
     // pass the address defined in the app
     Addr: app.serverConfig.addr,
