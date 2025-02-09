@@ -29,7 +29,7 @@ func(app *application) mount() http.Handler{
   r.Use(middleware.Logger)
 
   // Group routes by version
-  r.Route("v1",  func(r chi.Router){
+  r.Route("/v1",  func(r chi.Router){
 
   r.Get("/health", app.healthCheckHandler)
   })
