@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/filippovicini/socialgo/internal/store"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -12,6 +13,7 @@ import (
 // application interface
 type application struct {
   serverConfig config
+  store store.Storage 
 }
 
 
