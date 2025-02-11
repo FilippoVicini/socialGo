@@ -14,11 +14,20 @@ import (
 type application struct {
   serverConfig config
   store store.Storage 
+  
 }
 
+type dbConfig struct{
+  addr string
+  maxOpenConns int
+  maxIdleConns int 
+  maxIdleTime string
+}
 
 type config struct {
   addr string
+// add a db in runtime so dev, prod... have different dbs
+  db dbConfig
 }
 
 
